@@ -1,0 +1,12 @@
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid green;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: #000000;
+    font-weight: bold;
+}

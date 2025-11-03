@@ -1,5 +1,6 @@
 export interface Shape {
     name: string;
+    zIndex: number;
 }
 
 export interface Figure extends Shape {
@@ -32,14 +33,16 @@ export interface Triangle extends Figure {
 export interface Photo extends Shape{
     leftTop: Point;
     rightBottom: Point;
+    url: string
 }
+
+export type ShapeType = Rectangle | Circle | Triangle | Photo;
 
 export interface Slide {
     id: number
-    shapes: Shape[];
+    shapes: ShapeType[];
 }
 
 export interface App {
-    name: string;
     slides: Slide[];
 }
