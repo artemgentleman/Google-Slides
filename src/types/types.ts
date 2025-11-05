@@ -9,6 +9,8 @@ export interface Shape {
     zIndex: number;
     id: number;
     leftTopPoint: Point;
+    width: number;
+    height: number;
 }
 
 export interface Figure extends Shape {

@@ -45,6 +45,8 @@ export const appSlice = createSlice({
                 rightBottom: { x: 300, y: 250 },
                 type: 'rectangle',
                 id: state.slides[action.payload.currentSlide].shapes.length,
+                width: 100,
+                height: 100,
             })
         },
         addCircle: (state, action: PayloadAction<AddShape>) => {
@@ -59,6 +61,8 @@ export const appSlice = createSlice({
                 center: { x: 200, y: 200 },
                 type: 'circle',
                 id: state.slides[action.payload.currentSlide].shapes.length,
+                width: 100,
+                height: 100,
             })
         },
         addTriangle: (state, action: PayloadAction<AddShape>) => {
@@ -74,6 +78,8 @@ export const appSlice = createSlice({
                 thirdPoint:  { x:  50, y: 250 },
                 type: 'triangle',
                 id: state.slides[action.payload.currentSlide].shapes.length,
+                width: 100,
+                height: 100,
             })
         },
         addPhoto: (state, action: PayloadAction<AddShape>) => {
@@ -86,6 +92,8 @@ export const appSlice = createSlice({
                 url: action.payload.url ?? '',
                 type: 'photo',
                 id: state.slides[action.payload.currentSlide].shapes.length,
+                width: 100,
+                height: 100,
             })
         },
         changeShapeCoordinate: (state, action: PayloadAction<ChangeCoordinate>) => {

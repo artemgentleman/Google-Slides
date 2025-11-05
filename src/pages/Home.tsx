@@ -155,8 +155,10 @@ export const Home = () => {
                         <div className={styles.slide}>
                             {slide.shapes.map((shape: ShapeType, index: number) => {
                                 const style = {
-                                    top: shape.leftTopPoint.y,
-                                    left: shape.leftTopPoint.x,
+                                    width: shape.width,
+                                    height: shape.height,
+                                    top: shape.leftTopPoint.y- shape.height / 2,
+                                    left: shape.leftTopPoint.x - shape.width / 2,
                                     border: '1px solid #000',
                                     position: 'fixed',
                                 } as CSSProperties
