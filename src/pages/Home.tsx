@@ -1,12 +1,21 @@
 import {Page} from "../components/page/Page.tsx";
 import styles from './Home.module.css'
-import {useState} from "react";
+import {type CSSProperties, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../store/hooks.ts";
-import {addCircle, addPhoto, addRectangle, addSlide, addTriangle, removeSlide} from "../store/reducers/appReducer.ts";
+import {
+    addCircle,
+    addPhoto,
+    addRectangle,
+    addSlide,
+    addTriangle,
+    changeShapeCoordinate,
+    removeSlide
+} from "../store/reducers/appReducer.ts";
 import type {ShapeType, Slide} from "../types/types.ts";
-import {Circle} from "../components/shapes/Circle.tsx";
+/*import {Circle} from "../components/shapes/Circle.tsx";
 import {Rectangle} from "../components/shapes/Rectangle.tsx";
 import {Triangle} from "../components/shapes/Triangle.tsx";
+import {Photo} from "../components/shapes/Photo.tsx";*/
 
 interface ButtonInterface {
     name: string;
@@ -27,7 +36,7 @@ export const Home = () => {
     const newSlides: Slide[] = useAppSelector((state) => state.app.slides)
     const dispatch = useAppDispatch()
 
-    const slide = newSlides[currentSlide]
+    const slide = newSlides?.[currentSlide] ?? null;
 
     const onClickAddSlideButton = () => {
         dispatch(addSlide())
@@ -69,24 +78,41 @@ export const Home = () => {
         },
     ];
 
-    const renderShape = (shape: ShapeType) => {
-        switch (shape.name) {
-            case 'Circle':
+    /*const renderShape = (shape: ShapeType) => {
+        switch (shape.type) {
+            case 'circle':
                 return <Circle shape={shape} />;
-
-            case 'Rectangle':
+            case 'rectangle':
                 return <Rectangle shape={shape} />;
-
-            case 'Triangle':
+            case 'triangle':
                 return <Triangle shape={shape}/>;
-
-            case 'Photo':
-                return <div className={styles.photo}>photo</div>
-
+            case 'photo':
+                return <Photo shape={shape} />
             default:
                 return <div>Unknown shape</div>;
         }
+    };*/
+
+    const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setStartPos({ x: e.clientX, y: e.clientY });
     };
+
+    const handleMouseMove = (e: React.MouseEvent, shapeId: number) => {
+        if (e.buttons !== 1) return;
+
+        const dx = e.clientX - startPos.x;
+        const dy = e.clientY - startPos.y;
+
+        console.log("Отклонение:", { dx, dy });
+        dispatch(changeShapeCoordinate({
+            currentSlide: slide?.id,
+            currentShape: shapeId,
+            point: {x: e.clientX, y: e.clientY}}
+        ))
+    };
+
 
     return (
         <Page>
@@ -127,11 +153,22 @@ export const Home = () => {
                 {newSlides.length > 0 &&
                     <div className={styles.slide_area}>
                         <div className={styles.slide}>
-                            {slide.shapes.map((shape: ShapeType, index) => (
-                                <div key={index}>
-                                    {renderShape(shape)}
-                                </div>
-                            ))}
+                            {slide.shapes.map((shape: ShapeType, index: number) => {
+                                const style = {
+                                    top: shape.leftTopPoint.y,
+                                    left: shape.leftTopPoint.x,
+                                    border: '1px solid #000',
+                                    position: 'fixed',
+                                } as CSSProperties
+
+                                return <div
+                                    onMouseDown={handleMouseDown}
+                                    onMouseMove={(e) => handleMouseMove(e, shape.id)}                                    style={style}
+                                    key={index}
+                                >
+                                    {shape.name}
+                                </div>;
+                            })}
                         </div>
                     </div>
                 }

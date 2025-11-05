@@ -1,10 +1,19 @@
-import styles from './Triangle.module.css'
-import type {ShapeType} from "../../types/types.ts";
+import type {Triangle as TriangleType} from "../../types/types.ts";
 
 export interface TriangleProps {
-    shape: ShapeType
+    shape: TriangleType
 }
 
 export const Triangle = ({shape}: TriangleProps) => {
-    return <div className={styles.triangle}>{shape.name}</div>
+    const triangleShape: React.CSSProperties = {
+        width: '0',
+        height: '0',
+        borderLeft: '50px solid transparent',
+        borderRight: '50px solid transparent',
+        borderBottom: '100px solid #000',
+        position: 'fixed',
+        zIndex: shape.zIndex,
+    }
+
+    return <div style={triangleShape}></div>
 }

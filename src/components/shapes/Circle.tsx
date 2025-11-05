@@ -1,12 +1,24 @@
-import styles from './Circle.module.css'
-import type {ShapeType} from "../../types/types.ts";
+import type {Circle as CircleType} from "../../types/types.ts";
 
 export interface CircleProps {
-    shape: ShapeType
+    shape: CircleType
 }
 
 export const Circle = ({shape}: CircleProps) => {
-    return <div className={styles.circle}>
-        {shape.name}
-    </div>
+    const circleStyles: React.CSSProperties = {
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        border: '1px solid #000',
+        position: 'fixed',
+        zIndex: shape.zIndex,
+        top: shape.center.y,
+        left: shape.center.x,
+    }
+
+    const changePosition = () => {
+        
+    }
+
+    return <div style={circleStyles} onClick={changePosition}></div>
 }

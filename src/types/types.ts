@@ -1,6 +1,14 @@
+export interface Point {
+    x: number;
+    y: number;
+}
+
 export interface Shape {
+    type: "rectangle" | "circle" | "triangle" | "photo";
     name: string;
     zIndex: number;
+    id: number;
+    leftTopPoint: Point;
 }
 
 export interface Figure extends Shape {
@@ -9,28 +17,27 @@ export interface Figure extends Shape {
     outlineThickness: number;
 }
 
-export interface Point {
-    x: number;
-    y: number;
-}
-
 export interface Circle extends Figure {
+    type: "circle";
     radius: number;
     center: Point;
 }
 
 export interface Rectangle extends Figure {
+    type: "rectangle";
     leftTop: Point;
     rightBottom: Point;
 }
 
 export interface Triangle extends Figure {
+    type: "triangle";
     firstPoint: Point;
     secondPoint: Point;
     thirdPoint: Point;
 }
 
-export interface Photo extends Shape{
+export interface Photo extends Shape {
+    type: "photo";
     leftTop: Point;
     rightBottom: Point;
     url: string
